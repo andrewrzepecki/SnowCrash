@@ -1,0 +1,23 @@
+Home contain one level02.pcap file.
+A common software to read pcap files is WireShark, which we need to download on our
+local machine. We also need to transfer to pcap file to the local machine using scp as usual.
+
+		scp -P 4242 scp://level02@127.0.0.1/level02.pcap level02/Ressources
+
+
+Using Wireshark we can now see the stream of packets in in the same order the 
+network received them by following TCP stream.
+
+And we can now see all char in ASCII enter by the user after the password prompt. '.' are not printable in ASCII.
+Using the Hexdump feature we can see which ASCII characters these are.
+The 4 first ones are 7F and the last one is 0d
+
+Décimal   Octal   Hex  Binaire   Caractère
+-------   -----   ---  --------    ------
+  013      015    0D   00001101      CR    (Carriage Return)
+  127      177    7F   01111111      DEL    (delete)
+
+
+So we can ignore the last char (Carriage Return), remove the 4 deleted char and we have the completed password ft_waNDReL0L.
+
+FLAG02 PASSWORD: ft_waNDReL0L

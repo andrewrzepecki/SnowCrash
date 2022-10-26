@@ -1,0 +1,16 @@
+Home is empty.
+Previous attempt failed, another approach is to check /etc/passwd file that containe user data.
+
+		grep "flag01" /etc/passwd
+	flag01:42hDRfypTqqnw:3001:3001::/home/flag/flag01:/bin/bash
+
+42hDRfypTqqnw does not work, a common tool to decipher any weak /etc/paswd files is John the ripper.
+We need to transfer the /etc/passwd file to out local machine to use John the Ripper.
+		scp -P 4242 scp://level01@127.0.0.1/../../../etc/passwd level01/Ressources
+
+On local machine run john to get the password.
+
+		john level01/Ressources/passwd --show
+	flag01:abcdefg:3001:3001::/home/flag/flag01:/bin/bash
+
+FLAG01 PASSWORD: abcdefg

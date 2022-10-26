@@ -1,0 +1,19 @@
+Home is empty.
+Find files related to flag00 while redirecting stderr to /dev/null for readable output.
+            find / -user flag00 2>/dev/null
+
+2 Files found, show outputs.
+	    cat `find / -user flag00 2>/dev/null`
+	    
+
+	cdiiddwpgswtgt
+	cdiiddwpgswtgt
+
+
+Visit dcode.fr and try crypto tools.
+The most likely result is a rotation by 15 char as it really looks like a sentence.
+	nottoohardhere
+
+
+FLAG00 PASSWORD -> nottoohardhere
+

